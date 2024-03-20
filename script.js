@@ -152,6 +152,8 @@ const getSolution = () => {
     } else if (firstNumber){
         solution = `${parseFloat(firstNumber)}`;
     }
+    solution = `${parseFloat(solution).toFixed(2)}`
+
     display(hasError);
     decimalStatus = false;
     firstNumber = null
