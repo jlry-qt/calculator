@@ -10,6 +10,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 #calculator {    
@@ -60,6 +63,11 @@ body {
     justify-content: flex-end;
 }
 
+#numbers-container > #clear {
+    outline: 3px solid black;
+    background: red;
+    color: white;
+}
 
 #operators-container {
     width: 100px;

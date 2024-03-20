@@ -3,11 +3,14 @@ const buttonsContainer = document.querySelector('#buttons-container');
 const numberButtons = document.querySelectorAll('#numbers-container > .button');
 const calculatorDisplay = document.querySelector('#display');
 const operatorButtons = document.querySelectorAll('#operators-container > .operator');
+const clearButton = document.querySelector('#clear');
+const decimalPointButton = document.querySelector('#decimal-point');
 
 let firstNumber;
 let secondNumber;
 let operator;
 let solution = '0';
+let decimalStatus = false; //This to limit to only 1 decimal point
 
 const buttonsHandler = () => {
     buttonsContainer.addEventListener('click', event => {
@@ -17,6 +20,25 @@ const buttonsHandler = () => {
         }
 
         getNumbers(event);
+    })
+
+    clearButton.addEventListener('click', () => {
+        firstNumber = null;
+        secondNumber = null;
+        operator = null;
+        decimalStatus = false;
+        solution = '0';
+
+        display();
+    })
+
+    decimalPointButton.addEventListener('click', event => {
+        if (decimalStatus){
+            return;
+        } else {
+            decimalStatus = true
+            assignNumbers(event.target.innerText);
+        }
     })
 
     getOperator();
@@ -63,6 +85,7 @@ const getOperator = () => {
             display();
 
         } else if (firstNumber){
+            decimalStatus = false
             operator = event.target.id;
             display();
         }
@@ -98,8 +121,8 @@ const display = (error = null) => {
 const getSolution = () => {
     let hasError = false //Tracks if there is an error on the expression
     if (firstNumber && secondNumber){
-        num1 = parseInt(firstNumber);
-        num2 = parseInt(secondNumber);
+        num1 = parseFloat(firstNumber);
+        num2 = parseFloat(secondNumber);
 
         switch (operator){
             case '+':
@@ -127,9 +150,10 @@ const getSolution = () => {
         }
         
     } else if (firstNumber){
-        solution = firstNumber;
+        solution = `${parseFloat(firstNumber)}`;
     }
     display(hasError);
+    decimalStatus = false;
     firstNumber = null
     secondNumber = null;
     operator = null;
